@@ -11,6 +11,8 @@ public class DateCell extends Cell {
 	private Date date;
 	private DateFormat dateFormat = new SimpleDateFormat(pattern);
 
+	// Here I am using Date so it won't keep the formatting as the user wanted, but
+	// I do like that it will make everything consistent so idk
 	public DateCell(String date) {
 		try {
 			this.date = dateFormat.parse(date);
