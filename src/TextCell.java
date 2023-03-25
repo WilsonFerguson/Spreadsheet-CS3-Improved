@@ -2,19 +2,22 @@
 
 public class TextCell extends Cell {
 
-	// TODO: declare a private attribute of type String
+	private String text;
 
-	// TODO: add a constructor
+	public TextCell(String text) {
+		this.text = text;
+	}
 
 	/** Does not include enclosing quotes */
 	@Override
 	public String abbreviatedCellText() {
-		return ""; // TODO: Change this
+		String output = String.format("%-10s", text).substring(0, 10); // ChatGPT moment
+		return output;
 	}
 
 	/** Includes enclosing quotes */
 	@Override
 	public String fullCellText() {
-		return ""; // TODO: Change this
+		return "\"" + text + "\"";
 	}
 }

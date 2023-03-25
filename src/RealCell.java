@@ -2,22 +2,23 @@
 
 public class RealCell extends Cell {
 	private String fullText; // Stores full text of this cell
-	
+
 	public RealCell(String str) {
 		this.fullText = str;
 	}
 
 	public double getDoubleValue() {
-		return 0.0; // TODO: change this to return this cell's value
+		return Double.parseDouble(fullText);
 	}
-	
+
 	@Override
 	public String abbreviatedCellText() {
-		return "0.0"; // TODO: change this to call getDoubleValue and format the result
+		String output = String.format("%-10s", String.valueOf(getDoubleValue())).substring(0, 10); // ChatGPT moment
+		return output;
 	}
 
 	@Override
 	public String fullCellText() {
-		return this.fullText;
+		return fullText;
 	}
 }

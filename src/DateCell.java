@@ -1,13 +1,42 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 // CS3 Spreadsheet DateCell class.  Fill in the details.
 
 public class DateCell extends Cell {
-	// TODO: add a private attribute
+	private static final String pattern = "MM/dd/yyyy"; // ?Not sure if it's necessary to make this static, I just don't
+														// want it to make a variable for every instance of the class
 
-	// TODO: add a constructor that initializes the attribute
+	private Date date;
+	private DateFormat dateFormat = new SimpleDateFormat(pattern);
 
-	// TODO: override the abbreviatedCellText method
+	public DateCell(String date) {
+		try {
+			this.date = dateFormat.parse(date);
+		} catch (Exception e) {
+		}
+	}
 
-	// TODO: override the fullCellText method
-	
+	public static boolean isValidDate(String date) {
+		DateFormat dateFormat = new SimpleDateFormat(pattern);
+		try {
+			dateFormat.parse(date);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public String abbreviatedCellText() {
+		String output = fullCellText();
+		output = String.format("%-10s", output).substring(0, 10); // ChatGPT moment
+		return output;
+	}
+
+	@Override
+	public String fullCellText() {
+		return dateFormat.format(date);
+	}
 }

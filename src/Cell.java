@@ -3,7 +3,7 @@
 public class Cell {
 	/** text for spreadsheet cell display, must have length 10 */
 	public String abbreviatedCellText() {
-		return ""; // TODO: Fix this to return a string with ten spaces
+		return "          ";
 	}
 
 	/** text for individual cell inspection, not truncated or padded */
