@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Stack;
 
 // CS3 Spreadsheet Sheet class. Update this file with your own code.
 
@@ -7,6 +8,7 @@ public class Sheet {
 	private static int COLS = 12;
 
 	private Cell[][] sheet;
+	private Stack<Sheet> history = new Stack<>();
 
 	public Sheet() {
 		sheet = new Cell[ROWS][COLS];
@@ -15,6 +17,16 @@ public class Sheet {
 				sheet[i][j] = new Cell();
 			}
 		}
+	}
+
+	public Sheet clone() {
+		Sheet clone = new Sheet();
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < COLS; j++) {
+				clone.sheet[i][j] = sheet[i][j];
+			}
+		}
+		return clone;
 	}
 
 	private void setCell(Location location, Cell cell) {
@@ -62,12 +74,14 @@ public class Sheet {
 		if (cell == null)
 			return "Invalid cell value";
 
+		history.push(clone());
 		setCell(location, cell);
 		return toString();
 	}
 
 	private String processClear(String command) {
 		if (command.toLowerCase().equals("clear")) {
+			history.push(clone());
 			for (int i = 0; i < ROWS; i++) {
 				for (int j = 0; j < COLS; j++) {
 					sheet[i][j] = new Cell();
@@ -91,6 +105,18 @@ public class Sheet {
 		return toString();
 	}
 
+	private String processUndo(String command) {
+		if (command.toLowerCase().equals("undo")) {
+			if (history.isEmpty())
+				return "Cannot undo";
+
+			sheet = history.pop().sheet;
+			return toString();
+		}
+
+		return null;
+	}
+
 	public String processCommand(String command) {
 		if (command.equals(""))
 			return "";
@@ -106,6 +132,10 @@ public class Sheet {
 
 		// clear or clear A1
 		if ((output = processClear(command)) != null)
+			return output;
+
+		// undo or redo
+		if ((output = processUndo(command)) != null)
 			return output;
 
 		return toString();
