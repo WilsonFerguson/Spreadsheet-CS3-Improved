@@ -7,9 +7,9 @@ import java.util.Date;
 public class DateCell extends Cell {
 	private static final String pattern = "MM/dd/yyyy"; // ?Not sure if it's necessary to make this static, I just don't
 														// want it to make a variable for every instance of the class
+	private static final DateFormat dateFormat = new SimpleDateFormat(pattern);
 
 	private Date date;
-	private DateFormat dateFormat = new SimpleDateFormat(pattern);
 
 	// Here I am using Date so it won't keep the formatting as the user wanted, but
 	// I do like that it will make everything consistent so idk
@@ -21,7 +21,6 @@ public class DateCell extends Cell {
 	}
 
 	public static boolean isValidDate(String date) {
-		DateFormat dateFormat = new SimpleDateFormat(pattern);
 		try {
 			dateFormat.parse(date);
 			return true;
